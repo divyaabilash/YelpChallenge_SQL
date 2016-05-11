@@ -1,19 +1,40 @@
--- {"yelping_since": "2012-02", "votes": {"funny": 1, "useful": 5, 
--- "cool": 0}, "review_count": 6, "name": "Lee", "user_id": "qtrmBGNqCvupHMHL_bKFgQ",
- -- "friends": [], "fans": 0, "average_stars": 3.8300000000000001, "type": "user", 
- -- "compliments": {}, "elite": []}
-
 CREATE TABLE YELP_USER(
-	yelping_since date,
-	review_count Integer,
-	name varachar(50) not null,
-	user_id varchar(50) not null,
-	average_stars number(1,2)
-)
+YELPING_SINCE TIMESTAMP,
+REVIEW_COUNT NUMBER,
+USER_NAME VARCHAR(50),
+USER_ID VARCHAR(50),
+FANS NUMBER,
+AVERAGE_STARS NUMBER,
+USER_TYPE VARCHAR(25)
+);
 
+CREATE TABLE VOTES(
+USER_ID VARCHAR(50),
+    FUNNY NUMBER,
+    USEFUL NUMBER,
+    COOL NUMBER,
+    FOREIGN KEY (USER_ID) REFERENCES YELP_USER(USER_ID)
+);
 
+CREATE TABLE FRIENDS(
+USER_ID VARCHAR(50),
+FRIENDS_ID VARCHAR(50),
+    FOREIGN KEY (USER_ID) REFERENCES YELP_USER(USER_ID),
+    FOREIGN KEY (FRIENDS_ID) REFERENCES YELP_USER(USER_ID)
+);
 
+CREATE TABLE COMPLIMENTS(
+USER_ID VARCHAR(50),
+COMPLIMENT_TYPE VARCHAR(50),
+COMPLEMENT_VALUE VARCHAR(50),
+ FOREIGN KEY (USER_ID) REFERENCES YELP_USER(USER_ID)
+);
 
+CREATE TABLE ELITE(
+USER_ID VARCHAR(50),
+YEARS_ELITE VARCHAR(250),
+ FOREIGN KEY (USER_ID) REFERENCES YELP_USER(USER_ID)
+);
 
 insert into YELP_USER VALUES(to_date('2012-02','yyyy-mm'));
 	select * from YELP_USER
